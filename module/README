@@ -1,0 +1,144 @@
+SystemVerilogTools version 0.01
+===============================
+
+NAME
+
+SystemVerilogTools - Package to parse and create SystemVerilog files
+
+VERSION
+
+Version 1.0
+
+ABSTRACT
+
+SystemVerilogTools - Package to parse and create SystemVerilog files
+
+SYNOPSIS
+
+    use SystemVerilogTools;
+
+    #******************************************************************
+    # Initialize SystemVerilog Hash:
+    #******************************************************************
+    my (%svH, $sv_rH);
+    $svH{ 'username' } = $author;
+    $svH{ 'file' } = $file;
+    $svH{ 'day' } = $day;
+    $svH{ 'month' } = $month;
+    $svH{ 'year' } = $year;
+    $svH{ 'debug' } = $debug;
+
+    # Generate Top-Level Module
+    $sv_rH = genSVTopModule(\%svH);
+
+    # Generate Low-Level Module
+    $sv_rH = genSVLowModule(\%svH);
+
+    # Generate Module Instantiateion
+    $sv_rH = printModInst(\%svH);
+
+    # Generate UCF File from Module
+    $sv_rH = genUCFFile(\%svH);
+
+    # Generate Test Benches
+    $sv_rH = genTBTestFile(\%svH);
+
+DESCRIPTION
+
+The SystemVerilogTools is used to generate or parse SystemVerilog files.
+
+printModInst:
+
+The sub-routine printModInst() will print out the SystemVerilog module 
+instantiation. The SystemVerilog module must use an ANSI-C style module
+declaration. An example module instantiation is shown below:
+
+    mymodule        _mymodule  (.clk (clk),
+				.data_in (data_in),
+                                .rst_n (rst_n),
+
+                                .data_out (data_out));
+
+genTBTestFile:
+
+The sub-routine genTBTestFile() will generate a set of Test Bench
+files based on the SystemVerilog module provided by the user. For 
+example, if the user provides a SystemVerilog module called 'mymodule'
+then the following files will be generated:
+    
+    - top.sv
+    - test_mymodule.sv
+
+The file 'top.sv' instantiates both the UUT (mymodule.sv) and the 
+Test Bench (test_mymodule.sv). All nets labeled with either 'clk' or
+'clock' will be generated using an always block in the following form:
+
+    // clk generators
+    initial begin
+      clk <= 1'b1;
+    end
+    
+    // Generate clock:
+    always #4 clk <= ~clk;
+
+All nets in the 'mymodule.sv' file are declared in the 'top.sv' file.
+
+The file 'test_mymodule.sv' contains the same number of i/o as 
+'mymodule.sv' with inputs and outputs swapped, except for clock 
+signals.
+
+genUCFFile:
+
+The sub-routine genUCFFile() will generate a Xilinx User Constraints File (UCF)
+based on the SystemVerilog module provided by the user. For 
+example, if the user provides a SystemVerilog module called 'mymodule'
+then the following files will be generated:
+
+    - mymodule.ucf
+
+The file 'mymodule.ucf' inserts net location and IO Standard declarations 
+for all I/O in 'mymodule.sv'. The location keyword 'LOC' defaults to empty, 
+and the 'IOSTANDARD' defaults to 'LVCMOS33'.
+
+genSVLowModule:
+
+The sub-routine genSVLowModule() will generate an empty lower-level SystemVerilog 
+module. A standard header is used containing an empty description and the 
+new module name. The module contains 3 input signals: clk, rst_n, and data_in[15:0].
+The module also contains 1 output signal: data_out[15:0].
+
+genSVTopModule:
+
+The sub-routine genSVTopModule() will generate an empty top-level SystemVerilog 
+module. A standard header is used containing an empty description and the 
+new module name. The module contains 3 input signals: clk, rst_n, and data_in[15:0].
+The module also contains 1 output signal: data_out[15:0].
+
+EXPORT
+ 
+None at the moment.
+
+INSTALLATION
+
+   perl Makefile.PL  # build the Makefile
+   make              # build the package
+   make install      # Install package
+
+SEE ALSO
+
+Example scripts can be accessed at the following website:
+
+    * http://www.jwebb-design.com/ee/howto/using_perl_with_sv.shtml
+
+AUTHOR
+
+Jeremy Webb, E<lt>jwwebb@jwebb-design.com<gt>
+
+BUGS
+
+Please report any bugs or feature requests to the author.
+
+COPYRIGHT AND LICENSE
+
+Copyright (C) 2012 by Jeremy Webb
+
