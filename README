@@ -56,3 +56,7 @@ script output will be printed in the current file. If you invoke them from
 within a DOS, Cygwin, or Bash Command Window, then you will have to either 
 cut and paste into your SystemVerilog file or pipe the output to a new file. 
 
+The company name in the header of each generated file can be customized during
+the installation of the SystemVerilogTools Perl Module. Each Perl script used
+to generate SystemVerilog modules will insert the custom company name in the 
+header of the module.
