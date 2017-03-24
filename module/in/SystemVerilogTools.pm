@@ -1,7 +1,7 @@
 package SystemVerilogTools;
 
 #******************************************************************
-# vim:ts=8:sw=8:expandtab:cindent
+# vim:tw=160:softtabstop=8:shiftwidth=8:cindent:syn=perl:
 #******************************************************************
 #
 # SystemVerilogTools.pm
@@ -62,11 +62,9 @@ sub getFile {
 	#  Usage: $sv_rH = getFile(\%svH);
 	#
 	#------------------------------------------------------------------------------ 
-	my ($sv_rH) = shift;	    # Read in user's variable.
-
-	my (%svH) = %{ $sv_rH }; # De-reference Verilog hash.
-
-	my ($debug) = $svH{'debug'};   # Print out Debug Info.
+	my ($sv_rH) = shift;		# Read in user's variable.
+	my (%svH) = %{ $sv_rH };	# De-reference hash.
+	my ($debug) = $svH{'debug'};	# Print out Debug Info.
 	
 	#------------------------------------------------------------------------------ 
 	# Open the SystemVerilog file, and read the results into an array
@@ -94,9 +92,7 @@ sub getFile {
 	print("\n\n") if $debug;
 		
 	#------------------------------------------------------------------------------ 
-        #
         # Return data to user
-        #
 	#------------------------------------------------------------------------------ 
         return \%svH;
 }
@@ -118,11 +114,9 @@ sub parseFile {
 	#  Usage: $sv_rH = parseFile(\%svH);
 	#
 	#------------------------------------------------------------------------------ 
-	my ($sv_rH) = shift;	    # Read in user's variable.
-
-	my (%svH) = %{ $sv_rH }; # De-reference Verilog hash.
-
-	my ($debug) = $svH{'debug'};   # Print out Debug Info.
+	my ($sv_rH) = shift;		# Read in user's variable.
+	my (%svH) = %{ $sv_rH };	# De-reference hash.
+	my ($debug) = $svH{'debug'};	# Print out Debug Info.
 
 	my ($modfound) = "";
 	my ($pcfound) = "";
@@ -170,9 +164,7 @@ sub parseFile {
 	$svH{ 'endModFound' } = $endmodfound;
 
 	#------------------------------------------------------------------------------ 
-        #
         # Return data to user
-        #
 	#------------------------------------------------------------------------------ 
         return \%svH;
 }
@@ -194,11 +186,9 @@ sub getModDecl {
 	#  Usage: $sv_rH = getModDecl($sv_rH);
 	#
 	#------------------------------------------------------------------------------ 
-	my ($sv_rH) = shift;	    # Read in user's variable.
-
-	my (%svH) = %{ $sv_rH }; # De-reference Verilog hash.
-
-	my ($debug) = $svH{'debug'};   # Print out Debug Info.
+	my ($sv_rH) = shift;		# Read in user's variable.
+	my (%svH) = %{ $sv_rH };	# De-reference hash.
+	my ($debug) = $svH{'debug'};	# Print out Debug Info.
 
 	#------------------------------------------------------------------------------ 
 	# Push contents between 'module' and ending paren '\)\;' into an array.
@@ -235,9 +225,7 @@ sub getModDecl {
 	}
 		
 	#------------------------------------------------------------------------------ 
-        #
         # Return data to user
-        #
 	#------------------------------------------------------------------------------ 
         return \%svH;
 
@@ -256,17 +244,18 @@ sub getModName {
 	#  Usage: $sv_rH = getModName($sv_rH);
 	#
 	#------------------------------------------------------------------------------ 
-	my ($sv_rH) = shift;	    # Read in user's variable.
-
-	my (%svH) = %{ $sv_rH }; # De-reference Verilog hash.
-
-	my ($debug) = $svH{'debug'};   # Print out Debug Info.
+	my ($sv_rH) = shift;		# Read in user's variable.
+	my (%svH) = %{ $sv_rH };	# De-reference hash.
+	my ($debug) = $svH{'debug'};	# Print out Debug Info.
 
 	#------------------------------------------------------------------------------ 
 	# Strip off the Module name:
 	#------------------------------------------------------------------------------ 
 	print("\n\n") if $debug;
-	my ($crap1, $modname, $crap2) = (${ $svH{ 'modDecl' } }[0] =~ /(\S+\s+)(\S+)(.*)/);
+	my ($crap1);
+	my ($crap2);
+	my ($modname);
+	($crap1, $modname, $crap2) = (${ $svH{ 'modDecl' } }[0] =~ /(\S+\s+)(\S+)(.*)/);
 	$svH{ 'modName' } = $modname;
 	print("Module Name: $svH{ 'modName' }\n") if $debug;
 	
@@ -279,9 +268,7 @@ sub getModName {
 	}
 		
 	#------------------------------------------------------------------------------ 
-        #
         # Return data to user
-        #
 	#------------------------------------------------------------------------------ 
         return \%svH;
 
@@ -302,11 +289,9 @@ sub getModIO {
 	#  Usage: $sv_rH = getModIO($sv_rH);
 	#
 	#------------------------------------------------------------------------------ 
-	my ($sv_rH) = shift;	    # Read in user's variable.
-
-	my (%svH) = %{ $sv_rH }; # De-reference Verilog hash.
-
-	my ($debug) = $svH{'debug'};   # Print out Debug Info.
+	my ($sv_rH) = shift;		# Read in user's variable.
+	my (%svH) = %{ $sv_rH };	# De-reference hash.
+	my ($debug) = $svH{'debug'};	# Print out Debug Info.
 
 	#------------------------------------------------------------------------------ 
 	# Get Module Declaration:
@@ -520,9 +505,7 @@ sub getModIO {
 	%{ $svH{ 'modIO' } } = %allportsHoH;
 
 	#------------------------------------------------------------------------------ 
-        #
         # Return data to user
-        #
 	#------------------------------------------------------------------------------ 
         return \%svH;
 
@@ -550,11 +533,9 @@ sub genModInst {
 	#  Usage: $sv_rH = genModInst($sv_rH);
 	#
 	#------------------------------------------------------------------------------ 
-	my ($sv_rH) = shift;	    # Read in user's variable.
-
-	my (%svH) = %{ $sv_rH }; # De-reference Verilog hash.
-
-	my ($debug) = $svH{'debug'};   # Print out Debug Info.
+	my ($sv_rH) = shift;		# Read in user's variable.
+	my (%svH) = %{ $sv_rH };	# De-reference hash.
+	my ($debug) = $svH{'debug'};	# Print out Debug Info.
 
 	#------------------------------------------------------------------------------ 
 	# Get Module IO Ports Array:
@@ -682,7 +663,7 @@ sub genModInst {
 		my (@clk_indexA) = ();
 		my ($i) = 0;
 		for ($i = 0; $i < $numinports; $i++) {
-			if ($inports[$i] =~ m/clk/) {
+			if ($inports[$i] =~ m/clk/i) {
 				print("Clk Index: $i\n") if $debug;
 				push(@clk_indexA, $i);
 			}
@@ -750,9 +731,7 @@ sub genModInst {
 
 
 	#------------------------------------------------------------------------------ 
-        #
         # Return data to user
-        #
 	#------------------------------------------------------------------------------ 
         return \%svH;
 
@@ -797,9 +776,7 @@ sub checkClkIndex {
 	}
 
 	#------------------------------------------------------------------------------ 
-        #
         # Return data to user
-        #
 	#------------------------------------------------------------------------------ 
 	return $yes_or_no;
 }
@@ -826,11 +803,9 @@ sub printModInst {
 	#  Usage: $sv_rH = printModInst($sv_rH);
 	#
 	#------------------------------------------------------------------------------ 
-	my ($sv_rH) = shift;	    # Read in user's variable.
-
-	my (%svH) = %{ $sv_rH }; # De-reference Verilog hash.
-
-	my ($debug) = $svH{'debug'};   # Print out Debug Info.
+	my ($sv_rH) = shift;		# Read in user's variable.
+	my (%svH) = %{ $sv_rH };	# De-reference hash.
+	my ($debug) = $svH{'debug'};	# Print out Debug Info.
 
 	#------------------------------------------------------------------------------ 
 	# Open $file and stuff it into an array.
@@ -868,9 +843,7 @@ sub printModInst {
 	print("$modinst");
 
 	#------------------------------------------------------------------------------ 
-        #
         # Return data to user
-        #
 	#------------------------------------------------------------------------------ 
         return \%svH;
 
@@ -931,7 +904,7 @@ sub genTBTop {
 	# their respective arrays:
 	for my $key ( sort(keys %allportsHoH) ) {
 		if ($allportsHoH{$key}{'direction'} =~ m/input/) {
-			if ($allportsHoH{$key}{'port'} =~ m/(clk|clock)/) {
+			if ($allportsHoH{$key}{'port'} =~ m/(clk|clock|CLK)/) {
 				push(@inports, $allportsHoH{$key}{'port'});
 				push(@clkports, $allportsHoH{$key}{'port'});
 			} else {
@@ -1042,7 +1015,7 @@ sub genTBTop {
 	my (@clk_indexA) = ();
 	my ($u) = 0;
 	for ($u = 0; $u < $numinports; $u++) {
-		if ($inports[$u] =~ m/clk/) {
+		if ($inports[$u] =~ m/clk/i) {
 			print("Clk Index: $u\n") if $debug;
 			push(@clk_indexA, $u);
 		}
@@ -1132,7 +1105,7 @@ sub genTBTop {
 	# Push lines from the module declaration that match input, inout, or output into 
 	# their respective arrays:
 	for my $key ( sort(keys %allportsHoH) ) {
-		if ($allportsHoH{$key}{'port'} =~ m/(clk|clock)/) {
+		if ($allportsHoH{$key}{'port'} =~ m/(clk|clock|CLK)/) {
 			$templine = "logic            $allportsHoH{$key}{'port'};\n";
 			push(@inlines, $templine);
 			print("Clock: $templine\n") if $debug;
@@ -1147,7 +1120,7 @@ sub genTBTop {
 				$templine = "logic  [$msb:$lsb]    $allportsHoH{$key}{'port'};\n";
 				push(@inlines, $templine);
 				print("Input: $templine\n") if $debug;
-			} elsif(($allportsHoH{$key}{'width'} == 1) and !($allportsHoH{$key}{'port'} =~ m/(clk|clock)/)) {
+			} elsif(($allportsHoH{$key}{'width'} == 1) and !($allportsHoH{$key}{'port'} =~ m/(clk|clock|CLK)/)) {
 				$templine = "logic            $allportsHoH{$key}{'port'};\n";
 				push(@inlines, $templine);
 				print("Input: $templine\n") if $debug;
@@ -1199,15 +1172,17 @@ sub genTBTop {
 	# Build up Top-Level Test Bench File.
 	#------------------------------------------------------------------------------ 
 	my $tbTopBody=<<"EOF";
-/*****************************************************************
+/******************************************************************************
+ vim:tw=160:softtabstop=4:shiftwidth=4:et:syn=verilog:
+*******************************************************************************
 
  $tbTopFile module
 
-******************************************************************
+*******************************************************************************
 
- COMPANY Confidential Copyright © $yearR
+ COMPANY Confidential Copyright ï¿½ $yearR
 
-******************************************************************
+*******************************************************************************
 
  created on:	$monthR/$day/$yearR 
  created by:	$username
@@ -1216,12 +1191,12 @@ sub genTBTop {
  revision:      \$Revision: \$
  comments:      Generated
 
-******************************************************************
+*******************************************************************************
  //Project// (//Number//)
 
  This module tests the $file_sv module.
 
-******************************************************************/
+******************************************************************************/
 `include "../../../$file_sv"
 `include "$tbTestFile"
 `timescale        1ns/1ps
@@ -1260,9 +1235,7 @@ EOF
 	$svH{ 'tbTopBody' } = $tbTopBody;
 
 	#------------------------------------------------------------------------------ 
-        #
         # Return data to user
-        #
 	#------------------------------------------------------------------------------ 
         return \%svH;
 
@@ -1278,10 +1251,8 @@ sub genTBTestHeader {
 	#  Usage: $sv_rH = printTBHeader($sv_rH);
 	#
 	#------------------------------------------------------------------------------ 
-	my ($sv_rH) = shift;	    # Read in user's variable.
-
-	my (%svH) = %{ $sv_rH }; # De-reference Verilog hash.
-
+	my ($sv_rH) = shift;		# Read in user's variable.
+	my (%svH) = %{ $sv_rH };	# De-reference hash.
 	my $file_sv = $svH{'file'};
 	my $day = $svH{'day'};
 	my $month = $svH{'month'};
@@ -1303,15 +1274,17 @@ sub genTBTestHeader {
 	my $tbTestFile = join ".",$test_file,"sv";
 
 	my $tbTestHead=<<"EOF";
-/*****************************************************************
+/******************************************************************************
+ vim:tw=160:softtabstop=4:shiftwidth=4:et:syn=verilog:
+*******************************************************************************
 
  $tbTestFile module
 
-******************************************************************
+*******************************************************************************
 
- COMPANY Confidential Copyright © $yearR
+ COMPANY Confidential Copyright ï¿½ $yearR
 
-******************************************************************
+*******************************************************************************
 
  created on:	$monthR/$day/$yearR 
  created by:	$username
@@ -1320,7 +1293,7 @@ sub genTBTestHeader {
  revision:      \$Revision: \$
  comments:      Generated
 
-******************************************************************
+*******************************************************************************
  //Project// (//Number//)
 
  This module implements the test bench for the $file_sv module.
@@ -1328,7 +1301,7 @@ sub genTBTestHeader {
 	// enter detailed description here;
 
 
-******************************************************************/
+******************************************************************************/
 `timescale        1ns/1ps
 
 
@@ -1356,10 +1329,8 @@ sub genTBTestBody {
 	#  Usage: $sv_rH = printTBBody($sv_rH);
 	#
 	#------------------------------------------------------------------------------ 
-	my ($sv_rH) = shift;	    # Read in user's variable.
-
-	my (%svH) = %{ $sv_rH }; # De-reference Verilog hash.
-
+	my ($sv_rH) = shift;		# Read in user's variable.
+	my (%svH) = %{ $sv_rH };	# De-reference hash.
 	my $modname = $svH{ 'modName' };
 	my $test_modname = join "_", "test", $modname;
 	my ($debug) = $svH{'debug'};   # Print out Debug Info.
@@ -1398,7 +1369,7 @@ sub genTBTestBody {
 	# Push lines from the module declaration that match input, inout, or output into 
 	# their respective arrays:
 	for my $key ( sort(keys %allportsHoH) ) {
-		if ($allportsHoH{$key}{'port'} =~ m/(clk|clock)/) {
+		if ($allportsHoH{$key}{'port'} =~ m/(clk|clock|CLK)/) {
 			$templine = "$indent_spaces input   logic           $allportsHoH{$key}{'port'},\n";
 			push(@inlines, $templine);
 			print("Clock: $templine\n") if $debug;
@@ -1413,7 +1384,7 @@ sub genTBTestBody {
 				$templine = "$indent_spaces output  logic  [$msb:$lsb]    $allportsHoH{$key}{'port'},\n";
 				push(@outlines, $templine);
 				print("Input: $templine\n") if $debug;
-			} elsif(($allportsHoH{$key}{'width'} == 1) and !($allportsHoH{$key}{'port'} =~ m/(clk|clock)/)) {
+			} elsif(($allportsHoH{$key}{'width'} == 1) and !($allportsHoH{$key}{'port'} =~ m/(clk|clock|CLK)/)) {
 				$templine = "$indent_spaces output  logic            $allportsHoH{$key}{'port'},\n";
 				push(@outlines, $templine);
 				print("Input: $templine\n") if $debug;
@@ -1488,20 +1459,37 @@ integer		results_file;	// for writing signal values
 // initial block
 initial
 begin
-	// initialize signals
-        \$display("Initialize Signals");
-	rst_n <= 0;
+    #1;
+    \$timeformat(-9, 0, " ns", 9);
 
-        \$display("Wait for 100 ns");
-        #100
-        ->start_Monitor;              //trigger routine to monitor 
-        CpuReset;
-	
-        // open results file, write header
-	results_file=\$fopen("../out/top_results.txt");
-	\$fdisplay(results_file, " $test_modname testbench results");
-	\$fwrite(results_file, "\\n");
-	DisplayHeader;
+    /*************************************************************************/
+    /**
+        Open results file, write header:
+            
+            1. Setup top-level results file.
+
+    **************************************************************************/
+    // open results file, write header
+    results_file=\$fopen("../out/top_results.txt");
+    \$fdisplay(results_file, " $test_modname testbench results");
+    \$fwrite(results_file, "\\n");
+    DisplayHeader;
+    
+    /*************************************************************************/
+    /**
+        Initialize signals:
+            
+            1. Set Default Variables
+            2. Force registers to safe state
+
+    **************************************************************************/
+    // initialize signals
+    \$display("Initialize Signals");
+    rst <= 0;
+
+    VarClockDelay(.delay(100));
+    ->start_Monitor;              //trigger routine to monitor 
+    CpuReset;
 	
 	// Add more test bench stuff here
 	
@@ -1527,13 +1515,56 @@ task DisplayHeader;
   \$fdisplay(results_file,"                 ============================");
 endtask    
 
+/****************************************************************************/
+/**
+* CpuReset - Perform a board level reset.
+*
+* \@param    none
+*
+* \@return   none
+*
+* \@note   
+*
+*****************************************************************************/
 task CpuReset;
 begin
-	\@ (posedge clk);
-	rst_n = 0;
-	\@ (posedge clk);
-	rst_n = 1;
-	\@ (posedge clk);
+    \$display("Perform a Reset");
+    \@ (posedge clk);
+    \$display("Set Reset High");
+    rst = 1;
+    \@ (posedge clk);
+    \$display("Wait for 10 clock cycles");
+    repeat(10) @ (posedge clk);
+    \$display("Set Reset Low");
+    rst = 0;
+    \@ (posedge clk);
+end
+endtask
+
+
+/****************************************************************************/
+/**
+* VarClockDelay - Variable delay block in increments of clk.
+*
+* \@param    delay - Number of Clock Cyles to Insert.
+*
+* \@return   none
+*
+* \@note   
+*
+*   This task allows delay to be added between test bench code without 
+*   ending on a non-integer multiple of the clock.
+*
+*****************************************************************************/
+task VarClockDelay (input int delay);
+string delay_str;
+begin
+    delay_str.itoa(delay);
+    \$display("Wait for \%%s clock cycles", delay_str);
+    for(int i=0; i < delay; i++)
+    begin
+        \@ (posedge clk);
+    end
 end
 endtask
 
@@ -1545,9 +1576,7 @@ EOF
 	$svH{ 'tbTestBody' } = $tbTestBody;
  
 	#------------------------------------------------------------------------------ 
-        #
         # Return data to user
-        #
 	#------------------------------------------------------------------------------ 
         return \%svH;
 
@@ -1586,11 +1615,9 @@ sub genTBTestFile {
 	#  Usage: $sv_rH = genTBTestFile(\%svH);
 	#
 	#------------------------------------------------------------------------------ 
-	my ($sv_rH) = shift;	    # Read in user's variable.
-
-	my (%svH) = %{ $sv_rH }; # De-reference Verilog hash.
-
-	my ($debug) = $svH{'debug'};   # Print out Debug Info.
+	my ($sv_rH) = shift;		# Read in user's variable.
+	my (%svH) = %{ $sv_rH };	# De-reference hash.
+	my ($debug) = $svH{'debug'};	# Print out Debug Info.
 
 	#------------------------------------------------------------------------------ 
 	# Open $file and stuff it into an array.
@@ -1672,9 +1699,7 @@ sub genTBTestFile {
 	print("\n");	
 
 	#------------------------------------------------------------------------------ 
-        #
         # Return data to user
-        #
 	#------------------------------------------------------------------------------ 
         return \%svH;
 }
@@ -1718,7 +1743,7 @@ sub genUCFHeader {
 #
 #******************************************************************
 #
-# COMPANY Confidential Copyright © $yearR
+# COMPANY Confidential Copyright ï¿½ $yearR
 #
 #******************************************************************
 #
@@ -1762,9 +1787,7 @@ EOF
 	$svH{ 'ucfhead' } = $ucfhead;
 
 	#------------------------------------------------------------------------------ 
-        #
         # Return data to user
-        #
 	#------------------------------------------------------------------------------ 
         return \%svH;
 
@@ -1780,9 +1803,8 @@ sub genUCFBody {
 	#  Usage: $sv_rH = printUCFBody($sv_rH);
 	#
 	#------------------------------------------------------------------------------ 
-	my ($sv_rH) = shift;	    # Read in user's variable.
-
-	my (%svH) = %{ $sv_rH }; # De-reference Verilog hash.
+	my ($sv_rH) = shift;		# Read in user's variable.
+	my (%svH) = %{ $sv_rH };	# De-reference hash.
 
 
 	#------------------------------------------------------------------------------ 
@@ -1835,9 +1857,7 @@ EOF
 	$svH{ 'ucfbody' } = $ucfbody;
  
 	#------------------------------------------------------------------------------ 
-        #
         # Return data to user
-        #
 	#------------------------------------------------------------------------------ 
         return \%svH;
 
@@ -1861,11 +1881,9 @@ sub genUCFFile {
 	#  Usage: $sv_rH = genUCFFile(\%svH);
 	#
 	#------------------------------------------------------------------------------ 
-	my ($sv_rH) = shift;	    # Read in user's variable.
-
-	my (%svH) = %{ $sv_rH }; # De-reference Verilog hash.
-
-	my ($debug) = $svH{'debug'};   # Print out Debug Info.
+	my ($sv_rH) = shift;		# Read in user's variable.
+	my (%svH) = %{ $sv_rH };	# De-reference hash.
+	my ($debug) = $svH{'debug'};	# Print out Debug Info.
 
 	#------------------------------------------------------------------------------ 
 	# Open $file and stuff it into an array.
@@ -1926,9 +1944,7 @@ sub genUCFFile {
 	print("\n");	
 
 	#------------------------------------------------------------------------------ 
-        #
         # Return data to user
-        #
 	#------------------------------------------------------------------------------ 
         return \%svH;
 }
@@ -1945,10 +1961,8 @@ sub genSVLowModule {
 	#  Usage: $sv_rH = genSVLowModule($sv_rH);
 	#
 	#------------------------------------------------------------------------------ 
-	my ($sv_rH) = shift;	    # Read in user's variable.
-
-	my (%svH) = %{ $sv_rH }; # De-reference Verilog hash.
-
+	my ($sv_rH) = shift;		# Read in user's variable.
+	my (%svH) = %{ $sv_rH };	# De-reference hash.
 	my $file_sv = $svH{'file'};
 	my $day = $svH{'day'};
 	my $month = $svH{'month'};
@@ -1990,15 +2004,17 @@ sub genSVLowModule {
 
 
 	my $svLowHead=<<"HEAD";
-/*****************************************************************
+/******************************************************************************
+ vim:tw=160:softtabstop=4:shiftwidth=4:et:syn=verilog:
+*******************************************************************************
 
  $file_sv module
 
-******************************************************************
+*******************************************************************************
 
- COMPANY Confidential Copyright © $yearR
+ COMPANY Confidential Copyright ï¿½ $yearR
 
-******************************************************************
+*******************************************************************************
 
  created on:	$monthR/$day/$yearR 
  created by:	$username
@@ -2007,7 +2023,7 @@ sub genSVLowModule {
  revision:      \$Revision: \$
  comments:      Generated
 
-******************************************************************
+*******************************************************************************
  //Project// (//Number//)
 
  This module implements the ... in the //name// fpga.
@@ -2015,7 +2031,7 @@ sub genSVLowModule {
 	// enter detailed description here;
 
 
-******************************************************************/
+******************************************************************************/
 `timescale        1ns/1ps
 
 module    $modname        (// *** Inputs ***
@@ -2062,9 +2078,7 @@ HEAD
 	}
 
 	#------------------------------------------------------------------------------ 
-        #
         # Return data to user
-        #
 	#------------------------------------------------------------------------------ 
         return \%svH;
 
@@ -2082,10 +2096,8 @@ sub genSVTopModule {
 	#  Usage: $sv_rH = genSVTopModule($sv_rH);
 	#
 	#------------------------------------------------------------------------------ 
-	my ($sv_rH) = shift;	    # Read in user's variable.
-
-	my (%svH) = %{ $sv_rH }; # De-reference Verilog hash.
-
+	my ($sv_rH) = shift;		# Read in user's variable.
+	my (%svH) = %{ $sv_rH };	# De-reference hash.
 	my $file_sv = $svH{'file'};
 	my $day = $svH{'day'};
 	my $month = $svH{'month'};
@@ -2126,15 +2138,17 @@ sub genSVTopModule {
 	$indentCparen =~ s/ //;
 
 	my $svTopHead=<<"HEAD";
-/*****************************************************************
+/******************************************************************************
+ vim:tw=160:softtabstop=4:shiftwidth=4:et:syn=verilog:
+*******************************************************************************
 
  $file_sv module
 
-******************************************************************
+*******************************************************************************
 
- COMPANY Confidential Copyright © $yearR
+ COMPANY Confidential Copyright ï¿½ $yearR
 
-******************************************************************
+*******************************************************************************
 
  created on:	$monthR/$day/$yearR 
  created by:	$username
@@ -2148,7 +2162,7 @@ sub genSVTopModule {
  board revision:	A
  device mpn:		XCxxxx-4FG676C
  
-******************************************************************
+*******************************************************************************
  //Project// (//Number//)
 
  This module is the top level for the $modname FPGA
@@ -2167,7 +2181,7 @@ sub genSVTopModule {
 
 	$modname.ucf
 
-******************************************************************/
+******************************************************************************/
 `timescale        1ns/1ps
 
 module    $modname        (// *** Inputs ***
@@ -2214,9 +2228,7 @@ HEAD
 	}
 
 	#------------------------------------------------------------------------------ 
-        #
         # Return data to user
-        #
 	#------------------------------------------------------------------------------ 
         return \%svH;
 
@@ -2357,7 +2369,7 @@ Example scripts can be accessed at the following website:
 
 =head1 AUTHOR
 
-Jeremy Webb, E<lt>jwwebb@jwebb-design.com<gt>
+Jeremy Webb, E<lt>jeremy.webb@jwebb-consulting.com<gt>
 
 =head1 BUGS
 
@@ -2365,6 +2377,6 @@ Please report any bugs or feature requests to the author.
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright (C) 2012 by Jeremy Webb
+Copyright (C) 2009-2017 by Jeremy Webb
 
 =cut
